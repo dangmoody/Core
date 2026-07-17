@@ -215,6 +215,8 @@ BUILDER_CALLBACK void SetBuilderOptions( BuilderOptions *options, CommandLineArg
 	//
 	// visual studio
 	//
+	options->generateSolution = HasCommandLineArg( args, "--sln" );
+
 	options->solution = {
 		.name = "Core",
 		.path = "visual_studio",
@@ -222,7 +224,9 @@ BUILDER_CALLBACK void SetBuilderOptions( BuilderOptions *options, CommandLineArg
 		.projects = {
 			{
 				.name = "core",
-				.codeFolders = { "src", "include" },
+				.extraFiles = {
+					"src/**/*", "include/**/*",
+				},
 				.configs = {
 					{ "debug",   core,  {             }, { /* debugger arguments */ } },
 					{ "release", core,  { "--release" }, { /* debugger arguments */ } },
@@ -231,6 +235,9 @@ BUILDER_CALLBACK void SetBuilderOptions( BuilderOptions *options, CommandLineArg
 
 			{
 				.name = "tests",
+				.extraFiles = {
+					"tests/**/*"
+				},
 				.configs = {
 					{ "debug",   tests, {             }, { /* debugger arguments */ } },
 					{ "release", tests, { "--release" }, { /* debugger arguments */ } },
@@ -238,8 +245,4 @@ BUILDER_CALLBACK void SetBuilderOptions( BuilderOptions *options, CommandLineArg
 			},
 		},
 	};
-
-	if ( HasCommandLineArg( args, "--sln" ) ) {
-		options->generateSolution = true;
-	}
 }
