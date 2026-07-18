@@ -225,7 +225,8 @@ BUILDER_CALLBACK void SetBuilderOptions( BuilderOptions *options, CommandLineArg
 			{
 				.name = "core",
 				.extraFiles = {
-					"src/**/*", "include/**/*",
+					"src/**/*",
+					"include/**/*",
 				},
 				.configs = {
 					{ "debug",   core,  {             }, { /* debugger arguments */ } },
